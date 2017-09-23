@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>
+            ThreeJsTesting
+        </title>
+        <style> 
+            body{margin: 0};
+            canvas { width: 100%; height: 100% }
+    
+        </style>
+    </head>
+
+    <body>
+        <script src="js/three.js"> </script>
+        <script src="js/OrbitControls.js"></script>
+
+        <script>
+            var Scene = new THREE.Scene( );
+            var camera = new THREE.PerspectiveCamera( 75,window.innerWidth/window.innerHeight, 0.1, 1000);
+        
+            var renderer = new THREE.WebGLRenderer ( );
+            renderer.setSize( window.innerWidth, window.innerHeight);
+            document.body.appendChild (renderer.domElement);
+
+            window.addEventListener('resize', function()
+            {
+                var width= window.innerWidth;
+                var height= window.innerHeight;
+                renderer.setSize( width, height);
+                camera.aspect = width/height;
+                camera.updateProjectionMatrix ();
+            } );
+
+            controls = new THREE.OrbitControls( camera, renderer.domElement);
+
+            // create the shape
+            var geometry = new THREE.BoxGeometry( 2, 2, 2);
+            //var cubeMaterial = new THREE.MeshBasicMaterial({ transparent: false, map: THREE.ImageUtils.loadTexture('img/1.png') });
+            //cubeMaterial.side = THREE.DoubleSide;
+        
+
+          
+
+            // create a material, colour or image texture
+            //var material = new THREE.material(geometry, cubeMaterial);
+
+            var material = new THREE.MeshBasicMaterial ( { color:0xFFFFFF, wireframe: true});
+            var cube = new THREE.Mesh( geometry, material);
+            Scene.add (cube);
+
+            camera.position.z = 3;
+            
+            // game logic
+            var update = function ( )
+
+            {
+                cube.rotation.x += 0.001;
+                cube.rotation.y += 0.005;
+
+            };
+
+            // draw Scense
+            var render = function( )
+            {
+                renderer.render( Scene, camera);
+            }
+
+            // run game loop  (update, render, repeat)
+            var GameLoop = function ( )
+            {
+                requestAnimationFrame (GameLoop);
+
+                update( );
+                render( ); 
+            };
+
+            GameLoop( ) ;
+        
+        </script>
+
+    </body>
+</html>
